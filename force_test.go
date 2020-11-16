@@ -42,10 +42,10 @@ func TestWorkerPool(t *testing.T) {
 		return nil
 	}
 
-	wp := New(numWorkers)
+	wp := New(numWorkers, fn)
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel() //shuts down worker goroutines when test finishes
-	taskChan := wp.Launch(ctx, fn)
+	taskChan := wp.Launch(ctx)
 
 	for i := 0; i < numWorkers; i++ {
 		taskChan <- time.Now().UTC()
